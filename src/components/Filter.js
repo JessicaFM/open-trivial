@@ -4,13 +4,16 @@ import { withRouter } from 'react-router-dom';
 import { Box, SimpleGrid, Text, Button, VStack, Flex } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
 
+import theme, { Theme } from "@chakra-ui/theme"
+
+
 import FilterComponent from "./FilterComponent"
 
 class Filter extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            questions: 10,
+            amount: 10,
             category: "",
             difficulty: "",
             type: "",
@@ -20,6 +23,9 @@ class Filter extends React.Component {
         }
         this.handler = this.handler.bind(this)
         this.submitForm = this.submitForm.bind(this)
+
+        console.log(props)
+
     }
 
     handler(event) {
@@ -28,16 +34,16 @@ class Filter extends React.Component {
 
     submitForm(e) {
         var elements = this.state;
-        if(elements.questions <= 0) {
+        if(elements.amount <= 0) {
             // Minim 1 question is required, if not we need to show error message
             console.log("Thre is a error");
             this.setState({showError: true, errorText: this.showError("questionNull")});
         } else {
-
+            var query = this.constructQuery();
+            console.log(query);
+            this.props.history.push('/questions', { data: query });
         }
-        var query = this.constructQuery();
-        console.log(query);
-        this.props.history.push('/questions', { data: query });
+        
     }
 
     // Showing error if something going wrong
@@ -50,7 +56,7 @@ class Filter extends React.Component {
 
     // Construct submited GET query
     constructQuery = () => {
-        var query = { "amount": this.state.questions };
+        var query = { "amount": this.state.amount };
         if(this.state.category != '') {
             query.category = this.state.category;
         }
@@ -71,6 +77,15 @@ class Filter extends React.Component {
         }
         return (
             <VStack className="filter">
+                <Flex>
+                <Button colorScheme="green.200" variant="outline">
+                    Yes
+                </Button>
+                <Button colorScheme="red.300" variant="outline">
+                    No
+                </Button>
+                <Button colorScheme="brand.100">Click me</Button>
+            </Flex>
                 <React.Fragment> 
                     <Box w="450px" p="8" backgroundColor="gray.50">
                         <Box p="3">

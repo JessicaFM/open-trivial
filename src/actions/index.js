@@ -2,46 +2,67 @@ import fetch from 'isomorphic-fetch'
 
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
+export const URL = 'https://opentdb.com/api.php?'
 
-function requestQuestions() {
+function requestQuestions(query) {
   return {
     type: REQUEST_QUESTIONS,
+    query: query
   }
 }
 
 function receiveQuestion(json) {
+  console.log("receiveQuestion")
+  console.log(json.results)
   return {
     type: RECEIVE_QUESTIONS,
-    posts: json.data.children.map(child => child.data),
+    questions: json.results.map(child => child),
     receivedAt: Date.now()
   }
 }
 
 function shouldFetchQuestions(state) {
-  const posts = state.questions
-  if (!posts) {
+  const questions = state.questions
+  console.log("QUESTIONS:")
+  console.log(questions)
+  if (!questions) {
     return true
-  } else if (posts.isFetching) {
+  } else if (questions.isFetching) {
     return false
   } else {
-    return posts.didInvalidate
+    return questions.didInvalidate
   }
 }
 
-function fetchQuestions() {
-  var subreddit = 'react'
+function fetchQuestions(parameters) {
+  var query = ''
+  if(parameters.amount) {
+    query += 'amount='+ parameters.amount
+  } 
+  if(parameters.category) {
+    query += '&category='+ parameters.category
+  } 
+  if(parameters.difficulty) {
+    query += '&difficulty='+ parameters.difficulty
+  } 
+  if(parameters.type) {
+    query += '&type='+ parameters.type
+  } 
+
   return dispatch => {
-    dispatch(requestQuestions(subreddit))
-    return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+    dispatch(requestQuestions(query))
+    return fetch(URL + query, { headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }, })
       .then(response => response.json())
       .then(json => dispatch(receiveQuestion(json)))
   }
 }
 
-export function fetchQuestionsIfNeeded() {
+export function fetchQuestionsIfNeeded(parameters) {
   return (dispatch, getState) => {
     if (shouldFetchQuestions(getState())) {
-      return dispatch(fetchQuestions())
+      return dispatch(fetchQuestions(parameters))
     }
   }
 }

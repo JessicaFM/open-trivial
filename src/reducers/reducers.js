@@ -5,9 +5,12 @@ import {
   
   function questions(state = {
     isLoading: false,
+    amount: 0, // default
     items: []
   }, action) {
+    console.log("action")
     console.log(action)
+    console.log("------")
     switch (action.type) {
       case REQUEST_QUESTIONS:
         return Object.assign({}, state, {
@@ -16,7 +19,7 @@ import {
       case RECEIVE_QUESTIONS:
         return Object.assign({}, state, {
           isLoading: false,
-          items: action.posts
+          items: action.questions
         })
       default:
         return state
@@ -24,11 +27,15 @@ import {
   }
 
   function questionSelected(state = {}, action) {
+    console.log("state[action]")
+    console.log(state)
+    console.log(action)
+    console.log("-----")
     switch (action.type) {
       case REQUEST_QUESTIONS:
       case RECEIVE_QUESTIONS:
         return Object.assign({}, state, {
-          [action]: questions(state[action], action)
+          data: questions(state[action], action)
         })
       default:
         return state
