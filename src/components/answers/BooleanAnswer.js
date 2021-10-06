@@ -10,10 +10,10 @@ export class BooleanAnswer extends Component {
 
         return (
             <Flex>
-                <Button colorScheme="brand.100" variant="outline">
+                <Button colorScheme="green" variant="outline">
                     Yes
                 </Button>
-                <Button colorScheme="red.300" variant="outline">
+                <Button colorScheme="red" variant="outline">
                     No
                 </Button>
             </Flex>

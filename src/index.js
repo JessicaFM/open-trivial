@@ -7,9 +7,11 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import { ChakraProvider } from "@chakra-ui/react"
 
+import customTheme from 'ui/Theme'
+
 ReactDOM.render(
   <React.StrictMode>
-      <ChakraProvider>
+      <ChakraProvider resetCSS theme={customTheme}>
         <App />
       </ChakraProvider>
   </React.StrictMode>,

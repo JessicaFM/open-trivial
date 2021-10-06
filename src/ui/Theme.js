@@ -1,7 +1,8 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, theme } from "@chakra-ui/react";
 
 const colors = {
     colors: {
+      primary: theme.colors.twitter,
       transparent: "transparent",
       black: "#000",
       white: "#fff",
@@ -17,9 +18,9 @@ const colors = {
       },
     },
   }
-const theme = extendTheme({
+const customTheme = extendTheme({
     colors,
   });
   
-export default theme
+export default customTheme
   

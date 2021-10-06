@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 // UI
 import Loader from "react-loader-spinner";
-import { Box, Badge, Container, Progress, Flex, Spacer } from "@chakra-ui/react"
+import { Box, Button, Badge, Container, Progress, Flex, Spacer } from "@chakra-ui/react"
 
 // Actions
 import { fetchQuestionsIfNeeded } from "actions/index.js";
@@ -80,10 +80,21 @@ class Questions extends Component {
                                 </Box>
                             </Flex>
                             <Box>
-                                    <Progress hasStripe value={currentProgress} isAnimated={true} />
-                                </Box>
+                                <Progress hasStripe value={currentProgress} isAnimated={true} />
+                            </Box>
                             <Box>
-                                <Question questionItem={questions[this.state.questionNum]} index={this.state.questionNum}></Question>
+                                <Question pt={3} questionItem={questions[this.state.questionNum]} index={this.state.questionNum}></Question>
+                                <Box pt={8}>
+                                    <Flex>
+                                        <Button colorScheme="teal" size="md">
+                                            Prev
+                                        </Button>
+                                        <Spacer />
+                                        <Button colorScheme="teal" size="md">
+                                            Next
+                                        </Button>
+                                    </Flex>
+                                </Box>
                             </Box>
                         </Box>   
                     }

@@ -4,9 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { Box, SimpleGrid, Text, Button, VStack, Flex } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
 
-import theme, { Theme } from "@chakra-ui/theme"
-
-
 import FilterComponent from "./FilterComponent"
 
 class Filter extends React.Component {
@@ -77,15 +74,6 @@ class Filter extends React.Component {
         }
         return (
             <VStack className="filter">
-                <Flex>
-                <Button colorScheme="green.200" variant="outline">
-                    Yes
-                </Button>
-                <Button colorScheme="red.300" variant="outline">
-                    No
-                </Button>
-                <Button colorScheme="brand.100">Click me</Button>
-            </Flex>
                 <React.Fragment> 
                     <Box w="450px" p="8" backgroundColor="gray.50">
                         <Box p="3">

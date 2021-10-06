@@ -21,9 +21,7 @@ const store = configureStore()
 
 
 function App() {
-  console.log(theme)
   return (
-    <ChakraProvider resetCSS theme={theme}>
       <Provider store={store}>
         <Router>
           <Switch>
@@ -39,7 +37,6 @@ function App() {
           </Switch>
         </Router>
       </Provider>
-    </ChakraProvider>
   );
 }
 
