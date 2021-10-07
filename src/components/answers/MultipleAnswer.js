@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Checkbox, Button, Stack, Flex } from "@chakra-ui/react"
+import { Checkbox, CheckboxGroup, HStack, Flex, RadioGroup, Radio, Stack } from "@chakra-ui/react"
 
 
 export class MultipleAnswer extends Component {
@@ -9,39 +9,38 @@ export class MultipleAnswer extends Component {
         console.log(props)
         this.state = {
             question: this.props.item,
-            answer_pool: this.optionAnswer()
+            answerPool: this.optionAnswer(),
+            selectedAnswer: false
         }
     }
 
     optionAnswer = () => {
-        // All cases
-        console.log("OP")
-        console.log(this.props.item)
-        let answersPool = [...this.props.item.incorrect_answers, this.props.item.correct_answer]
-        return this.shuffleAnswers(answersPool)
+        return this.shuffleAnswers([...this.props.item.incorrect_answers, this.props.item.correct_answer])
     }
 
     // Random order of all answer as a pool
-    shuffleAnswers = (answersArray) => {
-        for (var i = answersArray.length - 1; i > 0; i--) {
+    shuffleAnswers = (pool) => {
+        for (var i = pool.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
-            var temp = answersArray[i];
-            answersArray[i] = answersArray[j];
-            answersArray[j] = temp;
+            var temp = pool[i];
+            pool[i] = pool[j];
+            pool[j] = temp;
         }
-        return answersArray
+        return pool
     }
 
     render() {
         return (
             <Flex>
-                <Stack spacing={5} direction="row">
-                    {this.state.answer_pool.length>0 && 
-                        this.state.answer_pool.map((item, i) =>
-                            <Checkbox key={i}>{item}</Checkbox>        
+                <RadioGroup>
+                    <Stack spacing={4} direction="row">
+                    {this.state.answerPool.length>0 && 
+                        this.state.answerPool.map((item, i) =>
+                            <Radio key={i} value={item}>{item}</Radio>        
                         )
                     }
-                </Stack>
+                    </Stack>
+                </RadioGroup>
             </Flex>
         )
     }

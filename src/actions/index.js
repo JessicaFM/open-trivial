@@ -45,9 +45,12 @@ function fetchQuestions(parameters) {
   if(parameters.difficulty) {
     query += '&difficulty='+ parameters.difficulty
   } 
-  if(parameters.type) {
-    query += '&type='+ parameters.type
-  } 
+  // if(parameters.type) {
+  //   query += '&type='+ parameters.type
+  // } 
+
+  //testing boolean options 
+  query += '&type=boolean'
 
   return dispatch => {
     dispatch(requestQuestions(query))

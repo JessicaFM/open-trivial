@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container, Text, Badge } from "@chakra-ui/react"
+import { Box, Spacer, Button, Flex } from "@chakra-ui/react"
 
 // Components
 import { BooleanAnswer } from './answers/BooleanAnswer'
@@ -13,7 +13,8 @@ class Question extends React.Component {
         this.state =  { 
             question: props.questionItem, 
             index: props.index,
-            selected: false
+            selected: false,
+            correctAnswer: false
         } 
     }
 
@@ -24,13 +25,24 @@ class Question extends React.Component {
         return txt.value;
     }
 
+    handleSelected() {
+
+    }
+
     render() {
         console.log("RRR")
         console.log(this.state)
-        let answeComponent = <BooleanAnswer></BooleanAnswer>
+        let answeComponent = 
+        <BooleanAnswer 
+            item={this.state.question} 
+            correct={this.state.correctAnswer}>
+            </BooleanAnswer>
 
         if(this.state.question.type == 'multiple') {
-            answeComponent = <MultipleAnswer item={this.state.question}></MultipleAnswer>
+            answeComponent = 
+            <MultipleAnswer 
+            item={this.state.question}
+            correct={this.state.correctAnswer}></MultipleAnswer>
         } 
         
         return(
@@ -38,6 +50,16 @@ class Question extends React.Component {
                 { this.provisionalDecode(this.state.question.question) }
                 <Box>
                     { answeComponent }
+                </Box>
+                <Box pt={8}>
+                    <Flex>
+                        <Spacer />
+                        { this.state.selected &&
+                            <Button colorScheme="teal" size="md">
+                                Next
+                            </Button>
+                        }
+                    </Flex>
                 </Box>
             </Box>
         )

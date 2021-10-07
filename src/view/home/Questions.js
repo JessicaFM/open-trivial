@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 // UI
 import Loader from "react-loader-spinner";
-import { Box, Button, Badge, Container, Progress, Flex, Spacer } from "@chakra-ui/react"
+import { Box, Badge, Container, Progress, Flex } from "@chakra-ui/react"
 
 // Actions
 import { fetchQuestionsIfNeeded } from "actions/index.js";
@@ -17,7 +17,12 @@ import Question from 'components/Question.js'
 class Questions extends Component {
     constructor(props) {
         super(props);
-        this.state = { questionNum: 1 }
+        this.state = { 
+            questionNum: 1,
+            selected: false,
+            finish: false,
+            hits: 0
+        }
     }
 
     componentWillMount(){
@@ -29,9 +34,6 @@ class Questions extends Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
-        console.log(this.props);
-        console.log(this.state)
         const { dispatch } = this.props
         dispatch(fetchQuestionsIfNeeded(this.state.parameters))
       }
@@ -46,13 +48,6 @@ class Questions extends Component {
 
     render() {
         const { questions, isLoading } = this.props
-
-        console.log("RENDER")
-        console.log(this.state)
-        console.log(questions)
-        console.log(isLoading)
-        console.log("-----")
-        console.log(questions[this.state.parameters.amount])
         let currentProgress = parseInt((this.state.questionNum/this.state.parameters.amount)*100)
 
         return (
@@ -83,18 +78,11 @@ class Questions extends Component {
                                 <Progress hasStripe value={currentProgress} isAnimated={true} />
                             </Box>
                             <Box>
-                                <Question pt={3} questionItem={questions[this.state.questionNum]} index={this.state.questionNum}></Question>
-                                <Box pt={8}>
-                                    <Flex>
-                                        <Button colorScheme="teal" size="md">
-                                            Prev
-                                        </Button>
-                                        <Spacer />
-                                        <Button colorScheme="teal" size="md">
-                                            Next
-                                        </Button>
-                                    </Flex>
-                                </Box>
+                                <Question pt={3} 
+                                    questionItem={questions[this.state.questionNum]} 
+                                    index={this.state.questionNum}
+                                    hits={this.state.hits}>
+                                </Question>
                             </Box>
                         </Box>   
                     }
@@ -110,14 +98,7 @@ Questions.propTypes = {
 }
 
 function mapStateToProps(state) {
-    console.log("mapStateToProps")
-    console.log(state)
-    console.log(this.state)
-    console.log("------")
     const { questionSelected } = state
-    console.log("questionSelected:")
-    console.log(questionSelected)
-
     const {
         isLoading,
         items: questions
@@ -125,12 +106,6 @@ function mapStateToProps(state) {
       isFetching: true,
       items: []
     }
-  
-    console.log("questionSelected")
-    console.log(questionSelected.data)
-
-    console.log("-----")
-
     return {
         isLoading,
         questions
