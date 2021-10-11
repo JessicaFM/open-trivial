@@ -49,8 +49,8 @@ function fetchQuestions(parameters) {
   //   query += '&type='+ parameters.type
   // } 
 
-  //testing boolean options 
-  query += '&type=boolean'
+  //testing mutitiple options 
+  query += '&type=multiple'
 
   return dispatch => {
     dispatch(requestQuestions(query))

@@ -5,8 +5,7 @@ import { Checkbox, CheckboxGroup, HStack, Flex, RadioGroup, Radio, Stack } from 
 export class MultipleAnswer extends Component {
     constructor(props){
         super(props)
-        console.log("IN MULTI")
-        console.log(props)
+        this.handleAnswer = this.handleAnswer.bind(this)
         this.state = {
             question: this.props.item,
             answerPool: this.optionAnswer(),
@@ -29,6 +28,10 @@ export class MultipleAnswer extends Component {
         return pool
     }
 
+    handleAnswer(option) {
+        this.props.onChange(option)
+    }
+
     render() {
         return (
             <Flex>
@@ -36,7 +39,8 @@ export class MultipleAnswer extends Component {
                     <Stack spacing={4} direction="row">
                     {this.state.answerPool.length>0 && 
                         this.state.answerPool.map((item, i) =>
-                            <Radio key={i} value={item}>{item}</Radio>        
+                            <Radio key={i} value={item}
+                            onChange={() => this.handleAnswer(item) }>{item}</Radio>        
                         )
                     }
                     </Stack>

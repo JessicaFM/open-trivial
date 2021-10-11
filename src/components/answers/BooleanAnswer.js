@@ -8,8 +8,8 @@ export class BooleanAnswer extends Component {
         this.handleAnswer = this.handleAnswer.bind(this)
     }
     
-    handleAnswer(type) {
-        this.props.onChange(type)
+    handleAnswer(option) {
+        this.props.onChange(option)
     } 
 
     render() {

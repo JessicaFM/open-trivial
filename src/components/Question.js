@@ -31,14 +31,13 @@ class Question extends React.Component {
         this.props.onChange(value)
     }
 
-    handleAnswer(type) {
-        if(this.state.question.correct_answer.toString().toLowerCase() == type.toString().toLowerCase()) {
+    handleAnswer(option) {
+        if(this.state.question.correct_answer.toString().toLowerCase() == option.toString().toLowerCase()) {
             this.updateHits(1);
         } else {
-            console.log("fuk")
             this.updateHits(0)
         }
-        this.setState({ correctAnswer: type })
+        this.setState({ correctAnswer: option })
     }
 
     render() {
@@ -53,7 +52,8 @@ class Question extends React.Component {
             answeComponent = 
             <MultipleAnswer 
                 item={this.state.question}
-                correct={this.state.correctAnswer}>
+                correct={this.state.correctAnswer}
+                onChange={this.handleAnswer}>
                 </MultipleAnswer>
         } 
         
