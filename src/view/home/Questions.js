@@ -23,6 +23,7 @@ class Questions extends Component {
             finish: false,
             hits: 0
         }
+        this.updateHits = this.updateHits.bind(this)
     }
 
     componentWillMount(){
@@ -43,8 +44,11 @@ class Questions extends Component {
           const { dispatch, selectedSubreddit } = this.props
           dispatch(fetchQuestionsIfNeeded(selectedSubreddit))
         }
-      }
-    
+    }
+
+    updateHits(value) {
+        this.setState({ hits: this.state.hits+parseInt(value)})
+    }
 
     render() {
         const { questions, isLoading } = this.props
@@ -81,7 +85,7 @@ class Questions extends Component {
                                 <Question pt={3} 
                                     questionItem={questions[this.state.questionNum]} 
                                     index={this.state.questionNum}
-                                    hits={this.state.hits}>
+                                    onChange={this.updateHits}>
                                 </Question>
                             </Box>
                         </Box>   
