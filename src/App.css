@@ -1,3 +1,9 @@
 .home {
     height: 100vh;
 }
+.state_0 {
+    color: red;
+}
+.state_1 {
+    color: green;
+}

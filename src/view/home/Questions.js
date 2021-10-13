@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 
 // UI
 import Loader from "react-loader-spinner";
-import { Box, Badge, Container, Progress, Flex } from "@chakra-ui/react"
+import { Box, Center, Badge, Container, Progress, Flex } from "@chakra-ui/react"
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 // Actions
 import { fetchQuestionsIfNeeded } from "actions/index.js";
@@ -21,14 +22,14 @@ class Questions extends Component {
             questionNum: 1,
             selected: false,
             finish: false,
-            hits: 0
+            hits: 0,
+            fails: 0
         }
         this.updateHits = this.updateHits.bind(this)
     }
 
     componentWillMount(){
-        if (this.props.history.location.state.data)
-        {
+        if (this.props.history.location.state.data) {
             let parameters = this.props.history.location.state.data;
             this.setState({ parameters, searching: true });
         }
@@ -47,7 +48,11 @@ class Questions extends Component {
     }
 
     updateHits(value) {
-        this.setState({ hits: this.state.hits+parseInt(value)})
+        if(value == 0) {
+            this.setState({ fails: this.state.fails+1})
+        } else {
+            this.setState({ hits: this.state.hits+parseInt(value)})
+        }
     }
 
     render() {
@@ -69,13 +74,26 @@ class Questions extends Component {
                     {!isLoading && questions.length>0 &&
                         <Box>
                             <Flex>
-                                <Box>
+                                <Box flex="1">
                                     <Badge variant="outline" colorScheme="green">
                                         { this.state.questionNum } / { this.state.parameters.amount }
                                     </Badge>
                                 </Box>
-                                <Box>
+                                <Box flex="3">
                                     Questions
+                                </Box>
+                                <Box flex="1">
+                                    <Flex>
+                                        <Center flex="1">
+                                            <FaThumbsUp />
+                                            {this.state.hits}
+                                        </Center>
+                                        <Center>/</Center>
+                                        <Center flex="1">
+                                            <FaThumbsDown />
+                                            {this.state.fails}
+                                        </Center>
+                                    </Flex>
                                 </Box>
                             </Flex>
                             <Box>

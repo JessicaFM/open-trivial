@@ -1,6 +1,7 @@
 import React, { Component } from "react"
-import { Checkbox, CheckboxGroup, HStack, Flex, RadioGroup, Radio, Stack } from "@chakra-ui/react"
+import { Box, Flex, RadioGroup, Radio, Stack } from "@chakra-ui/react"
 
+import { Answer } from "./Answer"
 
 export class MultipleAnswer extends Component {
     constructor(props){
@@ -33,14 +34,18 @@ export class MultipleAnswer extends Component {
     }
 
     render() {
+        var correct = this.state.question.correct_answer
         return (
             <Flex>
                 <RadioGroup>
                     <Stack spacing={4} direction="row">
                     {this.state.answerPool.length>0 && 
                         this.state.answerPool.map((item, i) =>
-                            <Radio key={i} value={item}
-                            onChange={() => this.handleAnswer(item) }>{item}</Radio>        
+                                <Answer key={i} 
+                                    answerType="radio" 
+                                    answerCorrect={correct}
+                                    answerItem={item}
+                                    onChange={() => this.handleAnswer(item) } />
                         )
                     }
                     </Stack>

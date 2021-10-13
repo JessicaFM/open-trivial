@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Spacer, Button, Flex } from "@chakra-ui/react"
+import { Box, Center, Spacer, Button, Flex } from "@chakra-ui/react"
 
 // Components
 import { BooleanAnswer } from './answers/BooleanAnswer'
@@ -27,6 +27,10 @@ class Question extends React.Component {
         return txt.value;
     }
 
+    markCorrect() {
+
+    }
+
     updateHits(value) {
         this.props.onChange(value)
     }
@@ -36,6 +40,9 @@ class Question extends React.Component {
             this.updateHits(1);
         } else {
             this.updateHits(0)
+        }
+        if(this.state.question.type == 'multiple') {
+            this.markCorrect()
         }
         this.setState({ correctAnswer: option })
     }
@@ -73,6 +80,9 @@ class Question extends React.Component {
                         }
                     </Flex>
                 </Box>
+                <Center bg="tomato">
+
+                </Center>
             </Box>
         )
     }
