@@ -23,7 +23,9 @@ class Questions extends Component {
             selected: false,
             finish: false,
             hits: 0,
-            fails: 0
+            fails: 0,
+            questionFail: false,
+            questionOk: false
         }
         this.updateHits = this.updateHits.bind(this)
     }
@@ -38,9 +40,9 @@ class Questions extends Component {
     componentDidMount() {
         const { dispatch } = this.props
         dispatch(fetchQuestionsIfNeeded(this.state.parameters))
-      }
+    }
     
-      componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps) {
         if (this.props.selectedSubreddit !== prevProps.selectedSubreddit) {
           const { dispatch, selectedSubreddit } = this.props
           dispatch(fetchQuestionsIfNeeded(selectedSubreddit))
@@ -48,17 +50,24 @@ class Questions extends Component {
     }
 
     updateHits(value) {
+        let that = this // sorry 
         if(value == 0) {
-            this.setState({ fails: this.state.fails+1})
+            this.setState({ fails: this.state.fails+1, questionFail: true, questionOk: false })
         } else {
-            this.setState({ hits: this.state.hits+parseInt(value)})
+            this.setState({ hits: this.state.hits+parseInt(value), isQuestionFail: false, questionOk: true })
         }
+        setTimeout(function () {
+            that.setState({ questionNum: that.state.questionNum+1, questionFail: false, questionOk: false })
+        }, 5000);
     }
 
     render() {
         const { questions, isLoading } = this.props
         let currentProgress = parseInt((this.state.questionNum/this.state.parameters.amount)*100)
-
+        let currentQuestion = questions[this.state.questionNum];
+        let isQuestionOk = this.state.questionOk
+        let isQuestionFail = this.state.questionFail
+        console.log(isQuestionOk)
         return (
             <Container>
                 Questions Blocks!
@@ -101,11 +110,21 @@ class Questions extends Component {
                             </Box>
                             <Box>
                                 <Question pt={3} 
-                                    questionItem={questions[this.state.questionNum]} 
+                                    questionItem={currentQuestion} 
                                     index={this.state.questionNum}
                                     onChange={this.updateHits}>
                                 </Question>
                             </Box>
+                            { isQuestionOk &&
+                                <Box bg="green.200" p={3}>
+                                    Correct question!
+                                </Box>
+                            }
+                            { isQuestionFail && 
+                                <Box bg="tomato" p={3}>
+                                    Fail!
+                                </Box>
+                            }
                         </Box>   
                     }
                 </Box>   

@@ -16,18 +16,16 @@ export class Answer extends Component {
     }
 
     handleAnswer(item) {
-        console.log(item + " _ " + this.state.answerCorrect)
+        // If we wanna mark as correct, ex. green
         if(item === this.state.answerCorrect) {
             this.setState = ({ answerState: 1 })
-            console.log("YIKES")
         }
-        console.log(this.state)
+        this.props.onChange(item);
     }
 
     render() {
-        console.log(this.state)
         return (
-            <Box className={ "state_" + this.state.state } id="hola">
+            <Box className={ "state_" + this.state.state }>
                 {this.state.answerType=='radio' &&
                 <Radio value={this.state.answerItem} 
                     onChange={() => this.handleAnswer(this.state.answerItem) }>{this.state.answerItem}</Radio>

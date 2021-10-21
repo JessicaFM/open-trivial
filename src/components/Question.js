@@ -20,15 +20,15 @@ class Question extends React.Component {
         } 
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({ question: props.questionItem })
+    }
+
     // Sometimes, question string is encode
     provisionalDecode = (string) => {
         var txt = document.createElement('textarea');
         txt.innerHTML = string;
         return txt.value;
-    }
-
-    markCorrect() {
-
     }
 
     updateHits(value) {
@@ -40,9 +40,6 @@ class Question extends React.Component {
             this.updateHits(1);
         } else {
             this.updateHits(0)
-        }
-        if(this.state.question.type == 'multiple') {
-            this.markCorrect()
         }
         this.setState({ correctAnswer: option })
     }
@@ -64,6 +61,8 @@ class Question extends React.Component {
                 </MultipleAnswer>
         } 
         
+        console.log(this.state.question)
+        console.log(this.props.questionItem)
         return(
             <Box pt={3}>
                 { this.provisionalDecode(this.state.question.question) }

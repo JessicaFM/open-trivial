@@ -41,11 +41,11 @@ export class MultipleAnswer extends Component {
                     <Stack spacing={4} direction="row">
                     {this.state.answerPool.length>0 && 
                         this.state.answerPool.map((item, i) =>
-                                <Answer key={i} 
-                                    answerType="radio" 
-                                    answerCorrect={correct}
-                                    answerItem={item}
-                                    onChange={() => this.handleAnswer(item) } />
+                            <Answer key={i} 
+                                answerType="radio" 
+                                answerCorrect={correct}
+                                answerItem={item}
+                                onChange={() => this.handleAnswer(item) } />
                         )
                     }
                     </Stack>
