@@ -29,6 +29,15 @@ export class MultipleAnswer extends Component {
         return pool
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.item !== prevProps.item) {
+            this.setState({
+                question: this.props.item,
+                answerPool: this.optionAnswer()
+            })
+        }
+    }
+
     handleAnswer(option) {
         this.props.onChange(option)
     }

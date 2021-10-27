@@ -67,7 +67,6 @@ class Questions extends Component {
         let currentQuestion = questions[this.state.questionNum];
         let isQuestionOk = this.state.questionOk
         let isQuestionFail = this.state.questionFail
-        console.log(isQuestionOk)
         return (
             <Container>
                 Questions Blocks!

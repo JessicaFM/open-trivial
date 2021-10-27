@@ -8,8 +8,6 @@ import { MultipleAnswer } from './answers/MultipleAnswer'
 class Question extends React.Component {
     constructor(props) {
         super(props)
-        console.log("PROPRS")
-        console.log(props)
         this.handleAnswer = this.handleAnswer.bind(this)
         this.updateHits = this.updateHits.bind(this)
         this.state =  { 
@@ -60,9 +58,7 @@ class Question extends React.Component {
                 onChange={this.handleAnswer}>
                 </MultipleAnswer>
         } 
-        
-        console.log(this.state.question)
-        console.log(this.props.questionItem)
+
         return(
             <Box pt={3}>
                 { this.provisionalDecode(this.state.question.question) }

@@ -8,9 +8,6 @@ import {
     amount: 0, // default
     items: []
   }, action) {
-    console.log("action")
-    console.log(action)
-    console.log("------")
     switch (action.type) {
       case REQUEST_QUESTIONS:
         return Object.assign({}, state, {
@@ -27,10 +24,6 @@ import {
   }
 
   function questionSelected(state = {}, action) {
-    console.log("state[action]")
-    console.log(state)
-    console.log(action)
-    console.log("-----")
     switch (action.type) {
       case REQUEST_QUESTIONS:
       case RECEIVE_QUESTIONS:

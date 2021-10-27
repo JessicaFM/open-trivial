@@ -23,6 +23,16 @@ export class Answer extends Component {
         this.props.onChange(item);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.answerCorrect !== prevProps.answerCorrect) {
+            this.setState({
+                answerType: this.props.answerType,
+                answerCorrect: this.answerCorrect,
+                answerItem: this.props.answerItem
+            })
+        }
+    }
+
     render() {
         return (
             <Box className={ "state_" + this.state.state }>

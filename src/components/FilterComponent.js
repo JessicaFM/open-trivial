@@ -28,7 +28,6 @@ class FilterComponent extends React.Component {
 
     render() {
         let item
-        console.log(this.state.value);
         if(this.state.items) {
             item = <Select name={this.props.name} variant="outline" backgroundColor="white" onChange={this.props.handler}>
                     {this.state.items.map((item) => <option value={item.value} key={item.value}>{item.name}</option>)}

@@ -12,8 +12,6 @@ function requestQuestions(query) {
 }
 
 function receiveQuestion(json) {
-  console.log("receiveQuestion")
-  console.log(json.results)
   return {
     type: RECEIVE_QUESTIONS,
     questions: json.results.map(child => child),
@@ -22,9 +20,7 @@ function receiveQuestion(json) {
 }
 
 function shouldFetchQuestions(state) {
-  const questions = state.questions
-  console.log("QUESTIONS:")
-  console.log(questions)
+  const questions = state.questionsx
   if (!questions) {
     return true
   } else if (questions.isFetching) {

@@ -20,9 +20,6 @@ class Filter extends React.Component {
         }
         this.handler = this.handler.bind(this)
         this.submitForm = this.submitForm.bind(this)
-
-        console.log(props)
-
     }
 
     handler(event) {
@@ -33,11 +30,9 @@ class Filter extends React.Component {
         var elements = this.state;
         if(elements.amount <= 0) {
             // Minim 1 question is required, if not we need to show error message
-            console.log("Thre is a error");
             this.setState({showError: true, errorText: this.showError("questionNull")});
         } else {
             var query = this.constructQuery();
-            console.log(query);
             this.props.history.push('/questions', { data: query });
         }
         
@@ -63,7 +58,6 @@ class Filter extends React.Component {
         if(this.state.type != '') {
             query.type = this.state.type;
         }
-        console.log(query);
         return query;
     }
 
