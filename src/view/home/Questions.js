@@ -25,7 +25,8 @@ class Questions extends Component {
             hits: 0,
             fails: 0,
             questionFail: false,
-            questionOk: false
+            questionOk: false,
+            nextQuestionTimer: 0
         }
         this.updateHits = this.updateHits.bind(this)
     }
@@ -56,9 +57,24 @@ class Questions extends Component {
         } else {
             this.setState({ hits: this.state.hits+parseInt(value), isQuestionFail: false, questionOk: true })
         }
-        setTimeout(function () {
-            that.setState({ questionNum: that.state.questionNum+1, questionFail: false, questionOk: false })
-        }, 5000);
+
+        var seconds = parseInt(5 % 60, 10);
+        var timer = setInterval(function() {
+            if(seconds <= 0) {
+                that.setState({ 
+                    questionNum: that.state.questionNum+1, 
+                    questionFail: false, 
+                    questionOk: false,
+                    nextQuestionTimer: 0
+                })
+                clearInterval(timer);
+            } else {
+                that.setState({ 
+                    nextQuestionTimer: seconds
+                });
+            }
+            seconds -= 1
+        }, 1000);
     }
 
     render() {
@@ -67,6 +83,7 @@ class Questions extends Component {
         let currentQuestion = questions[this.state.questionNum];
         let isQuestionOk = this.state.questionOk
         let isQuestionFail = this.state.questionFail
+        let timer = this.state.nextQuestionTimer
         return (
             <Container>
                 Questions Blocks!
@@ -123,6 +140,11 @@ class Questions extends Component {
                                 <Box bg="tomato" p={3}>
                                     Fail!
                                 </Box>
+                            }
+                            { timer !=0 &&
+                            <Box>
+                                Next question in: {timer}
+                            </Box>
                             }
                         </Box>   
                     }
