@@ -11,10 +11,10 @@ import configureStore from "configureStore";
 
 // Views & styles
 import './App.css';
-import theme from './ui/Theme'
-import Home from './view/home/Home'
-import Questions from "./view/home/Questions";
-import NotFound from "./view/home/NotFound";
+import Home from './view/HomeView'
+import Questions from "./view/QuestionsView";
+import NotFound from "./view/NotFoundView";
+import End from "view/EndView";
 
 
 const store = configureStore()
@@ -30,6 +30,9 @@ function App() {
             </Route>
             <Route path="/questions" component="{Questions}">
               <Questions />
+            </Route>
+            <Route path="/end" component="{End}">
+              <End />
             </Route>
             <Route path="*">
                 <NotFound />

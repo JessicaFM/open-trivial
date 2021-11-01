@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 // UI
 import Loader from "react-loader-spinner";
-import { Box, Center, Badge, Container, Progress, Flex } from "@chakra-ui/react"
+import { Box, Center, Badge, Container, Progress, Flex, Link } from "@chakra-ui/react"
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 // Actions
@@ -26,7 +26,8 @@ class Questions extends Component {
             fails: 0,
             questionFail: false,
             questionOk: false,
-            nextQuestionTimer: 0
+            nextQuestionTimer: 0,
+            end: false
         }
         this.updateHits = this.updateHits.bind(this)
     }
@@ -58,11 +59,13 @@ class Questions extends Component {
             this.setState({ hits: this.state.hits+parseInt(value), isQuestionFail: false, questionOk: true })
         }
 
+        let num = that.state.questionNum+1
+        
         var seconds = parseInt(5 % 60, 10);
         var timer = setInterval(function() {
             if(seconds <= 0) {
                 that.setState({ 
-                    questionNum: that.state.questionNum+1, 
+                    questionNum: num, 
                     questionFail: false, 
                     questionOk: false,
                     nextQuestionTimer: 0
@@ -75,12 +78,21 @@ class Questions extends Component {
             }
             seconds -= 1
         }, 1000);
+
+        if(this.props.questions.length == this.state.questionNum) {
+            this.setState({ end: true })
+            this.props.history.push('/end');
+        } 
     }
 
     render() {
         const { questions, isLoading } = this.props
         let currentProgress = parseInt((this.state.questionNum/this.state.parameters.amount)*100)
-        let currentQuestion = questions[this.state.questionNum];
+        console.log(this.state.end)
+        let currentQuestion = ''
+        if(this.state.end == false) {
+            currentQuestion = questions[this.state.questionNum];
+        }
         let isQuestionOk = this.state.questionOk
         let isQuestionFail = this.state.questionFail
         let timer = this.state.nextQuestionTimer
@@ -125,11 +137,13 @@ class Questions extends Component {
                                 <Progress hasStripe value={currentProgress} isAnimated={true} />
                             </Box>
                             <Box>
-                                <Question pt={3} 
-                                    questionItem={currentQuestion} 
-                                    index={this.state.questionNum}
-                                    onChange={this.updateHits}>
-                                </Question>
+                                { !this.state.end &&
+                                    <Question pt={3} 
+                                        questionItem={currentQuestion} 
+                                        index={this.state.questionNum}
+                                        onChange={this.updateHits}>
+                                    </Question>
+                                }
                             </Box>
                             { isQuestionOk &&
                                 <Box bg="green.200" p={3}>
@@ -141,7 +155,7 @@ class Questions extends Component {
                                     Fail!
                                 </Box>
                             }
-                            { timer !=0 &&
+                            { !this.state.end && timer !=0 &&
                             <Box>
                                 Next question in: {timer}
                             </Box>
