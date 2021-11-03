@@ -10,7 +10,7 @@ class Filter extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            amount: 10,
+            amount: "",
             category: "",
             difficulty: "",
             type: "",
@@ -76,7 +76,7 @@ class Filter extends React.Component {
                         <Box p="3" spacing="40px" p="5">
                             <Text fontSize="lg" pb="3">Select custom questions</Text>
                                 <SimpleGrid minChildWidth="225px" spacing="10px">
-                                    <Box><FilterComponent name="questions" value={this.state.questions} handler={this.handler} /></Box>
+                                    <Box><FilterComponent name="amount" value={this.state.amoun} handler={this.handler} /></Box>
                                     <Box><FilterComponent name="category" value={this.state.category} handler={this.handler} /></Box>
                                     <Box><FilterComponent name="difficulty" value={this.state.difficulty} handler={this.handler} /></Box>
                                     <Box><FilterComponent name="type" value={this.state.type} handler={this.handler} /></Box>

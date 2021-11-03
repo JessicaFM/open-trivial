@@ -41,12 +41,9 @@ function fetchQuestions(parameters) {
   if(parameters.difficulty) {
     query += '&difficulty='+ parameters.difficulty
   } 
-  // if(parameters.type) {
-  //   query += '&type='+ parameters.type
-  // } 
-
-  //testing mutitiple options 
-  query += '&type=multiple'
+  if(parameters.type) {
+    query += '&type='+ parameters.type
+  } 
 
   return dispatch => {
     dispatch(requestQuestions(query))

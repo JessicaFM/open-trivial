@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Container, Link } from "@chakra-ui/react"
-import { withRouter } from "react-router";
+import { Container, Box, Link } from "@chakra-ui/react"
+import { withRouter } from "react-router"
+import { Link as ReachLink } from "react-router-dom"
 
 class End extends Component {
     constructor(props) {
@@ -11,9 +12,12 @@ class End extends Component {
         return(
             <Container>
                 Game has end!
-                <Link color="teal.500" to="/">
-                    links can live inline with text
-                </Link>
+                <Box>
+                    <Link color="teal.500" as={ReachLink} to="/">
+                        Go to home
+                    </Link>
+                </Box>
+               
             </Container>
         )
     }

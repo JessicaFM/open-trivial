@@ -19,7 +19,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            questionNum: 1,
+            questionNum: 0,
             selected: false,
             finish: false,
             hits: 0,
@@ -43,14 +43,8 @@ class Questions extends Component {
         const { dispatch } = this.props
         dispatch(fetchQuestionsIfNeeded(this.state.parameters))
     }
-    
-    componentDidUpdate(prevProps) {
-        if (this.props.selectedSubreddit !== prevProps.selectedSubreddit) {
-          const { dispatch, selectedSubreddit } = this.props
-          dispatch(fetchQuestionsIfNeeded(selectedSubreddit))
-        }
-    }
 
+    // I really need to optimize this, my good!
     updateHits(value) {
         let that = this // sorry 
         if(value == 0) {
@@ -59,16 +53,16 @@ class Questions extends Component {
             this.setState({ hits: this.state.hits+parseInt(value), isQuestionFail: false, questionOk: true })
         }
 
-        let num = that.state.questionNum+1
+        let num = this.state.questionNum+1
         
         var seconds = parseInt(5 % 60, 10);
         var timer = setInterval(function() {
             if(seconds <= 0) {
                 that.setState({ 
                     questionNum: num, 
+                    nextQuestionTimer: 0,
                     questionFail: false, 
-                    questionOk: false,
-                    nextQuestionTimer: 0
+                    questionOk: false 
                 })
                 clearInterval(timer);
             } else {
@@ -79,7 +73,7 @@ class Questions extends Component {
             seconds -= 1
         }, 1000);
 
-        if(this.props.questions.length == this.state.questionNum) {
+        if(this.props.questions.length === num) {
             this.setState({ end: true })
             this.props.history.push('/end');
         } 
@@ -88,7 +82,6 @@ class Questions extends Component {
     render() {
         const { questions, isLoading } = this.props
         let currentProgress = parseInt((this.state.questionNum/this.state.parameters.amount)*100)
-        console.log(this.state.end)
         let currentQuestion = ''
         if(this.state.end == false) {
             currentQuestion = questions[this.state.questionNum];
@@ -113,7 +106,7 @@ class Questions extends Component {
                             <Flex>
                                 <Box flex="1">
                                     <Badge variant="outline" colorScheme="green">
-                                        { this.state.questionNum } / { this.state.parameters.amount }
+                                        { this.state.questionNum + 1 } / { this.state.parameters.amount }
                                     </Badge>
                                 </Box>
                                 <Box flex="3">
