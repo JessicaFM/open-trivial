@@ -1,14 +1,14 @@
-import { Container } from "@chakra-ui/react"
+import { Container, Box } from "@chakra-ui/react"
 
 import Filter from 'components/Filter'
 
 function Home() {
     return (
-        <div className="home">
+        <Box className="home" backgroundColor="gray.100">
             <Container  maxW="container.lg" h="100%">
                 <Filter></Filter>
             </Container>
-        </div>
+        </Box>
     )
 }
 

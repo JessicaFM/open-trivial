@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 // UI
 import Loader from "react-loader-spinner";
-import { Box, Center, Badge, Container, Progress, Flex, Link } from "@chakra-ui/react"
+import { Box, Center, Badge, Container, Progress, Flex, Text } from "@chakra-ui/react"
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
 // Actions
@@ -90,73 +90,86 @@ class Questions extends Component {
         let isQuestionFail = this.state.questionFail
         let timer = this.state.nextQuestionTimer
         return (
-            <Container>
-                Questions Blocks!
-                <Box align="left">
-                    {isLoading && 
-                        <Loader
-                            type="Bars"
-                            color="#00BFFF"
-                            height={100}
-                            width={100}
-                        />
-                    }
-                    {!isLoading && questions.length>0 &&
-                        <Box>
+            <Box className="questions" backgroundColor="gray.100">
+                <Container maxW="container.lg" h="100%" backgroundColor="gray.100">
+                    <Center h="100%">
+                        <Box p="8" backgroundColor="gray.50">
                             <Flex>
-                                <Box flex="1">
-                                    <Badge variant="outline" colorScheme="green">
+                                <Box mt={4} pr={3}>
+                                    <Badge variant="outline" colorScheme="pink" fontSize="1em">
                                         { this.state.questionNum + 1 } / { this.state.parameters.amount }
                                     </Badge>
                                 </Box>
-                                <Box flex="3">
-                                    Questions
-                                </Box>
-                                <Box flex="1">
-                                    <Flex>
-                                        <Center flex="1">
-                                            <FaThumbsUp />
-                                            {this.state.hits}
-                                        </Center>
-                                        <Center>/</Center>
-                                        <Center flex="1">
-                                            <FaThumbsDown />
-                                            {this.state.fails}
-                                        </Center>
-                                    </Flex>
-                                </Box>
+                                <Text fontSize="4xl">Questions</Text>
                             </Flex>
-                            <Box>
-                                <Progress hasStripe value={currentProgress} isAnimated={true} />
-                            </Box>
-                            <Box>
-                                { !this.state.end &&
-                                    <Question pt={3} 
-                                        questionItem={currentQuestion} 
-                                        index={this.state.questionNum}
-                                        onChange={this.updateHits}>
-                                    </Question>
+                            <Box align="left" pt={4}>
+                                {isLoading && 
+                                    <Loader
+                                        type="Bars"
+                                        color="#00BFFF"
+                                        height={100}
+                                        width={100}
+                                    />
                                 }
-                            </Box>
-                            { isQuestionOk &&
-                                <Box bg="green.200" p={3}>
-                                    Correct question!
-                                </Box>
-                            }
-                            { isQuestionFail && 
-                                <Box bg="tomato" p={3}>
-                                    Fail!
-                                </Box>
-                            }
-                            { !this.state.end && timer !=0 &&
-                            <Box>
-                                Next question in: {timer}
-                            </Box>
-                            }
-                        </Box>   
-                    }
-                </Box>   
-            </Container>
+                                {!isLoading && questions.length>0 &&
+                                    <Box>
+                                        <Flex pb={3}>
+                                            <Box flex="1">
+                                                
+                                            </Box>
+                                            <Box flex="3">
+                                            </Box>
+                                            <Box flex="1">
+                                                <Flex>
+                                                    <Center flex="1">
+                                                        <Text fontSize="lg" color="green.300"><FaThumbsUp /></Text>
+                                                        <Text fontSize="md" pl={1}>{this.state.hits}</Text>
+                                                    </Center>
+                                                    <Center>/</Center>
+                                                    <Center flex="1">
+                                                        <Text fontSize="lg" color="red.300"><FaThumbsDown /></Text>
+                                                        <Text fontSize="md" pl={1}>{this.state.fails}</Text>
+                                                    </Center>
+                                                </Flex>
+                                            </Box>
+                                        </Flex>
+                                        <Box>
+                                            <Progress hasStripe value={currentProgress} isAnimated={true} />
+                                        </Box>
+                                        <Box>
+                                            { !this.state.end &&
+                                                <Question pt={3} 
+                                                    questionItem={currentQuestion} 
+                                                    index={this.state.questionNum}
+                                                    onChange={this.updateHits}>
+                                                </Question>
+                                            }
+                                        </Box>
+                                        { isQuestionOk &&
+                                            <Box bg="green.200" p={3}>
+                                                Correct question!
+                                            </Box>
+                                        }
+                                        { isQuestionFail && 
+                                            <Box bg="tomato" p={3}>
+                                                Fail!
+                                            </Box>
+                                        }
+                                        { !this.state.end && timer !=0 &&
+                                        <Box>
+                                            Next question in: {timer}
+                                        </Box>
+                                        }
+                                    </Box>   
+                                }
+                            </Box> 
+                        </Box>
+                        
+                    </Center>
+                      
+                </Container>
+            </Box>
+           
         )
     }
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import { withRouter } from 'react-router-dom';
 
-import { Box, SimpleGrid, Text, Button, VStack, Flex } from "@chakra-ui/react"
+import { Box, SimpleGrid, Text, Button, VStack, Flex, Center } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
 
 import FilterComponent from "./FilterComponent"
@@ -67,9 +67,9 @@ class Filter extends React.Component {
             errorBlock = <Box backgroundColor="red.300"><Text>{this.state.errorText}</Text></Box>
         }
         return (
-            <VStack className="filter">
-                <React.Fragment> 
-                    <Box w="450px" p="8" backgroundColor="gray.50">
+            <React.Fragment> 
+                <Center className="filter" h="100%">
+                    <Box p="8" backgroundColor="gray.50">
                         <Box p="3">
                             <Text fontSize="2xl">Open trivial</Text>
                         </Box>
@@ -88,9 +88,9 @@ class Filter extends React.Component {
                                 </Button>
                             </Flex>
                         </Box>
-                    </Box>         
-                </React.Fragment>
-            </VStack>
+                    </Box>  
+                </Center>        
+            </React.Fragment>
         )
     }  
 }
