@@ -38,3 +38,11 @@ export const typeElements = [
     { value:"multiple", name:"Multiple Choice" },
     { value:"boolean", name:"True / False" }
 ]
+
+export function getCategoryByValue(value) {
+    if(value) {
+        return categoryElements.find(category => category.value === value)
+    } else {
+        return categoryElements[0]
+    }
+}

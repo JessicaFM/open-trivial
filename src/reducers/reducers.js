@@ -5,7 +5,8 @@ import {
   
   function questions(state = {
     isLoading: false,
-    amount: 0, // default
+    amount: 0, 
+    category: "",
     items: []
   }, action) {
     switch (action.type) {
@@ -16,7 +17,8 @@ import {
       case RECEIVE_QUESTIONS:
         return Object.assign({}, state, {
           isLoading: false,
-          items: action.questions
+          items: action.questions,
+          category: action.category
         })
       default:
         return state

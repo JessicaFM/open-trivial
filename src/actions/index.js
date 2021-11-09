@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import { getCategoryByValue } from 'constants/itemsElements'
 
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
@@ -11,11 +12,12 @@ function requestQuestions(query) {
   }
 }
 
-function receiveQuestion(json) {
+function receiveQuestion(json, category) {
   return {
     type: RECEIVE_QUESTIONS,
     questions: json.results.map(child => child),
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
+    category: getCategoryByValue(category).name
   }
 }
 
@@ -51,7 +53,7 @@ function fetchQuestions(parameters) {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     }, })
       .then(response => response.json())
-      .then(json => dispatch(receiveQuestion(json)))
+      .then(json => dispatch(receiveQuestion(json, parameters.category)))
   }
 }
 

@@ -37,11 +37,11 @@ export class Answer extends Component {
         return (
             <Box className={ "state_" + this.state.state }>
                 {this.state.answerType=='radio' &&
-                <Radio value={this.state.answerItem} 
-                    onChange={() => this.handleAnswer(this.state.answerItem) }>{this.state.answerItem}</Radio>
+                    <Radio value={this.state.answerItem} 
+                        onChange={() => this.handleAnswer(this.state.answerItem) }>{this.state.answerItem}</Radio>
                 }
                 {this.state.answerType=='button'  && 
-                <div></div>
+                    <div></div>
                 }
             </Box>
         )

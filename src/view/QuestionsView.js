@@ -80,7 +80,7 @@ class Questions extends Component {
     }
 
     render() {
-        const { questions, isLoading } = this.props
+        const { questions, isLoading, category } = this.props
         let currentProgress = parseInt((this.state.questionNum/this.state.parameters.amount)*100)
         let currentQuestion = ''
         if(this.state.end == false) {
@@ -114,10 +114,8 @@ class Questions extends Component {
                                 {!isLoading && questions.length>0 &&
                                     <Box>
                                         <Flex pb={3}>
-                                            <Box flex="1">
-                                                
-                                            </Box>
-                                            <Box flex="3">
+                                            <Box flex="4">
+                                                { category }
                                             </Box>
                                             <Box flex="1">
                                                 <Flex>
@@ -164,9 +162,7 @@ class Questions extends Component {
                                 }
                             </Box> 
                         </Box>
-                        
-                    </Center>
-                      
+                    </Center>  
                 </Container>
             </Box>
            
@@ -176,20 +172,24 @@ class Questions extends Component {
 
 Questions.propTypes = {
     isLoading: PropTypes.bool,
-    questions: PropTypes.array
+    questions: PropTypes.array,
+    category: PropTypes.string
 }
 
 function mapStateToProps(state) {
     const { questionSelected } = state
     const {
         isLoading,
+        category,
         items: questions
     } = questionSelected.data || {
       isFetching: true,
+      category: "",
       items: []
     }
     return {
         isLoading,
+        category,
         questions
     }
 }
